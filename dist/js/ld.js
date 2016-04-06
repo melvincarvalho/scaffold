@@ -20,24 +20,24 @@ $(function () {
         logo : ''
       },
       leftbar: {
-        'dashboard' : false,
+        'dashboard' : true,
         'elements' : false,
         'forms' : false,
         'widgets' : false,
         'layoutoptions' : false,
         'tables' : false,
         'charts' : false,
-        'calendar' : false,
+        'calendar' : true,
         'examples' : false,
         'multilevel' : false,
-        'documentation' : false,
+        'documentation' : true,
         'labels' : false,
-        'inbox' : false
+        'inbox' : true
       },
       topbar: {
-        'tasks' : false,
-        'notifications' : false,
-        'messages' : false
+        'tasks' : true,
+        'notifications' : true,
+        'messages' : true
       },
       user: {
         '@id' : 'https://melvincarvalho.com/#me',
@@ -54,15 +54,15 @@ $(function () {
         'settings': false
       },
       widgets: {
-        'dashboard': false,
-        'summary': false,
+        'dashboard': true,
+        'summary': true,
         'work': false,
         'chat': false,
-        'todo': false,
-        'inbox': false,
+        'todo': true,
+        'inbox': true,
         'location': false,
         'performance': false,
-        'calendar': false
+        'calendar': true
       }
     }
   })
