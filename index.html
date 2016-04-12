@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Dashboard</title>
+  <title>Solid Live Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="dist/css/skins/all-skins.css">
+  <link rel="stylesheet" href="dist/css/skins/all-skins.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
   <!-- Morris chart -->
@@ -58,17 +58,18 @@
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less-->
-          <li v-if="topbar.notifications" class="dropdown messages-menu">
+          <li v-if="topbar.messages" class="dropdown messages-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">4</span>
+              <span class="label label-success">{{inbox.unread}}</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 4 messages</li>
+              <li class="header">You have {{inbox.unread}} messages</li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
-                  <li><!-- start message -->
+                  <!--
+                  <li>
                     <a href="#">
                       <div class="pull-left">
                         <img src="{{user.avatar}}" class="img-circle" alt="User Image">
@@ -80,7 +81,7 @@
                       <p>Why not buy a new awesome theme?</p>
                     </a>
                   </li>
-                  <!-- end message -->
+
                   <li>
                     <a href="#">
                       <div class="pull-left">
@@ -129,9 +130,10 @@
                       <p>Why not buy a new awesome theme?</p>
                     </a>
                   </li>
+                  -->
                 </ul>
               </li>
-              <li class="footer"><a href="#">See All Messages</a></li>
+              <li class="footer"><a target="_blank" href="https://solid.github.io/solid-inbox/">See All Messages</a></li>
             </ul>
           </li>
           <!-- Notifications: style can be found in dropdown.less -->
@@ -314,11 +316,11 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{user.avatar}}" class="img-circle" alt="User Image">
+          <img src="{{profile.avatar}}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>{{user.name}}</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> {{user.status}}</a>
+          <p>{{profile.name}}</p>
+          <a href="#"><i class="fa fa-circle text-success"></i> {{profile.status}}</a>
         </div>
       </div>
       <!-- search form -->
@@ -424,9 +426,9 @@
           </a>
         </li>
         <li v-if="leftbar.inbox">
-          <a href="pages/mailbox/mailbox.html">
+          <a target="_blank" href="https://solid.github.io/solid-inbox/#">
             <i class="fa fa-envelope"></i> <span>Inbox</span>
-            <small class="label pull-right bg-yellow">12</small>
+            <small class="label pull-right bg-yellow">{{inbox.unread}}</small>
           </a>
         </li>
         <li v-if="leftbar.examples" class="treeview">
@@ -503,14 +505,14 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>150</h3>
+              <h3>{{widgets.summary.work}}</h3>
 
               <p>Work Today</p>
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a target="_blank" href="{{widgets.summary.workmore}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -518,7 +520,7 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
+              <h3>{{ (Math.round((100 * widgets.summary.tidy) / (widgets.summary.tidy + widgets.summary.work))) || 0 }}<sup style="font-size: 20px">%</sup></h3>
 
               <p>Efficiency</p>
             </div>
@@ -533,14 +535,14 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>44</h3>
+              <h3>{{widgets.summary.tidy}}</h3>
 
-              <p>Friends</p>
+              <p>Chores today</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a target="_blank" href="{{widgets.summary.choresmore}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -548,9 +550,9 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>65</h3>
+              <h3>{{ widgets.summary.tidy + widgets.summary.work }}</h3>
 
-              <p>Balance</p>
+              <p>Total Today</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
@@ -625,7 +627,13 @@
               </div>
               <!-- /.item -->
               <!-- chat item -->
-              <div class="item">
+              <div classss="fa fa-edit"></i>
+                    <i class="fa fa-trash-o"></i>
+                  </div>
+                </li>
+                <li>
+                      <span class="handle">
+                        <i="item">
                 <img src="dist/img/user3-128x128.jpg" alt="user image" class="offline">
 
                 <p class="message">
@@ -656,7 +664,7 @@
               <!-- /.item -->
             </div>
             <!-- /.chat -->
-            <div class="box-footer">
+            <div v-if="widgets.chat" class="box-footer">
               <div class="input-group">
                 <input class="form-control" placeholder="Type message...">
 
@@ -731,6 +739,9 @@
                     <i class="fa fa-edit"></i>
                     <i class="fa fa-trash-o"></i>
                   </div>
+                </li>ss="fa fa-edit"></i>
+                    <i class="fa fa-trash-o"></i>
+                  </div>
                 </li>
                 <li>
                       <span class="handle">
@@ -774,7 +785,7 @@
               </ul>
             </div>
             <!-- /.box-body -->
-            <div class="box-footer clearfix no-border">
+            <div v-if="widgets.todo" class="box-footer clearfix no-border">
               <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
             </div>
           </div>
